@@ -17,7 +17,7 @@ res.send('Welcome to our API');
 });
 
 app.get('/api/allrecipes', (req, res) => {
-    pool.query('SELECT * FROM cookbook_g3;')
+    pool.query('SELECT * FROM cookbook')
     .then((data) => res.json(data.rows))
     .catch((e) => {
         console.error('Error executing query 1:', e);
@@ -28,7 +28,7 @@ app.get('/api/allrecipes', (req, res) => {
 app.get('/api/:type', (req, res) => {
     const { type } = req.params;
     console.log("type:", type)
-    pool.query('SELECT * FROM cookbook_g3 WHERE type=$1;', [type])
+    pool.query('SELECT * FROM cookbook WHERE type=$1;', [type])
     .then((data) => res.json(data.rows))
     .catch((e) => {
         console.error('Error executing query 2:', e);
@@ -37,8 +37,8 @@ app.get('/api/:type', (req, res) => {
 });
 
 app.get('/api/:type/:id', (req, res) => {
-    const {id, type } = req.params;
-    pool.query('SELECT * FROM cookbook_g3 WHERE type=$1 AND id=$2;', [type, id])
+    const {id, type} = req.params;
+    pool.query('SELECT * FROM cookbook WHERE id=$1;', [id])
     .then((data) => res.json(data.rows))
     .catch((e) => {
         console.error('Error executing query 3:', e);
